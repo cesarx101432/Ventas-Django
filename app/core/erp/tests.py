@@ -1,5 +1,9 @@
-from django.test import TestCase
+from config.wsgi import *
+from core.erp.models import *
 
-# Create your tests here.
+# LISTAR
 
-print("XX")
+print(Category.objects.all())
+
+for i in Category.objects.filter():
+    print(i)

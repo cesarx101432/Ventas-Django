@@ -2,3 +2,4 @@
 env/*
 app/core/erp/__pycache__/*
 app/core/erp/migrations/__pycache__/*
+app/core/erp/views/category/__pycache__/*
