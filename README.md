@@ -3,9 +3,16 @@ Sistema de ventas para django
 
 
 //iniciar variable de entorno
+
+
+## Iniciar variable de entorno
+
+```bash
+# Para inciar el proyecto es necesario iniciar las variable de entorno.
 py --version
 py -m venv env
 env\Scripts\activate.bat
+```
 
 
 //Instala Django
@@ -59,3 +66,13 @@ incluye las vistas
 
 //ORM -> Mapeo de objeto relacional
 puede interectura con la base de datos a manera de objetos se puede hacer insercion consultas y eliminaciones 
+
+
+## Run test.py
+
+```bash
+# Aqui se mete codigo que se necesita para procesar codigo de ayuda, no correra con el servidor.
+python tests.py
+```
+
+**
