@@ -1,6 +1,7 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
-
+from django.utils.decorators import method_decorator
 from core.erp.models import Category
 
 
@@ -16,9 +17,8 @@ class CategoryListView(ListView):
     model = Category
     template_name = 'category/list.html'
 
+    @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        if request.method == 'GET':
-            return redirect('erp:category_list2')
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
