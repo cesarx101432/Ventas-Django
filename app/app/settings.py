@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+     # Libs
+    'widget_tweaks',
      # Apps Aqui se asignas las apps creadas
     'core.erp'  
 ]
