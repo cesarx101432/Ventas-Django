@@ -1,4 +1,4 @@
-{% extends 'body.html' %}
+{% extends 'layout.html' %}
 {% load static %}
 {% block head %}
     <link rel="stylesheet" href="{% static 'lib/datatables-1.10.20/css/dataTables.bootstrap4.min.css' %}"/>
@@ -16,7 +16,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="card card-default">
+    <div class="card card-primary">
         <div class="card-header">
             <h3 class="card-title">
                 <i class="fas fa-search"></i>
@@ -62,7 +62,7 @@
                 }).done(function (data) {
                     console.log(data);
                 }).fail(function (jqXHR, textStatus, errorThrown) {
-                    alert(textStatus+': '+errorThrown);
+                    alert(textStatus + ': ' + errorThrown);
                 }).always(function (data) {
 
                 });
