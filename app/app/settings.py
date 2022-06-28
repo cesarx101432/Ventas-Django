@@ -41,7 +41,8 @@ INSTALLED_APPS = [
      # Libs
     'widget_tweaks',
      # Apps Aqui se asignas las apps creadas
-    'core.erp'  
+    'core.erp',
+    'core.homepage'  
 ]
 
 MIDDLEWARE = [
