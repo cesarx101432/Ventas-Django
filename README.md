@@ -13,6 +13,8 @@ py --version
 py -m venv env
 env\Scripts\activate.bat
 ```
+//* En caso de tener porblemas de activacion en shell de Visual Studio correr:
+\env\Scripts\Activate.ps1
 
 
 //Instala Django
@@ -22,7 +24,9 @@ pip install --upgrade pip
 
 //Instalar requerimientos del proyecto
 python -m pip freeze
-pip freeze>requirements.txt
+pip freeze>requirements.txt 
+// instalar requirements desde carpeta raiz (VENTAS-DJANGO)
+pip install -r \Ventas-Django\app\requirements.txt 
 
 
 // Iniciar proyecto Django
