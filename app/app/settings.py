@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'widget_tweaks',
      # Apps Aqui se asignas las apps creadas
     'core.erp',
-    'core.homepage'  
+    'core.homepage',
+    'core.login',
+      
 ]
 
 MIDDLEWARE = [
@@ -124,3 +126,5 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = '/erp/category/list/'
