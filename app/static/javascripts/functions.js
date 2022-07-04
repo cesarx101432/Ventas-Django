@@ -17,7 +17,6 @@ function message_error(obj) {
 }
 
 function submit_with_ajax(url, title, content, parameters, callback) {
-    console.log("submit_with_ajax")
     $.confirm({
         theme: 'material',
         title: title,
@@ -37,7 +36,7 @@ function submit_with_ajax(url, title, content, parameters, callback) {
                         url: url, //window.location.pathname
                         type: 'POST',
                         data: parameters,
-                        dataType: 'json'
+                        dataType: 'json',
                     }).done(function (data) {
                         console.log(data);
                         if (!data.hasOwnProperty('error')) {
