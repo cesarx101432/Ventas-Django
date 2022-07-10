@@ -21,9 +21,9 @@ class TestView(TemplateView):
         try:
             action = request.POST['action']
             if action == 'search_product_id':
-                data = []
+                data = [{'id': '', 'text': '------------'}]
                 for i in Product.objects.filter(cat_id=request.POST['id']):
-                    data.append({'id': i.id, 'name': i.name})
+                    data.append({'id': i.id, 'text': i.name, 'data': i.cat.toJSON()})
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:
