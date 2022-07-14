@@ -2,3 +2,9 @@ env/*
 app/core/erp/__pycache__/*
 *.pyc
 app/media/*
+app/core/erp/migrations/*
+app/core/homepage/migrations/*
+app/core/login/migrations/*
+app/core/user/migrations/*
+app/core/erp/migrations/*
+app/core/homepage/*
