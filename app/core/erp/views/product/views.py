@@ -98,7 +98,6 @@ class ProductDeleteView(DeleteView):
     success_url = reverse_lazy('erp:product_list')
 
     @method_decorator(login_required)
-    @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super().dispatch(request, *args, **kwargs)

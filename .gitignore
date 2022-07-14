@@ -8,3 +8,4 @@ app/core/login/migrations/*
 app/core/user/migrations/*
 app/core/erp/migrations/*
 app/core/homepage/*
+app/core/erp/views/category/__pycache__/views.cpython-310.pyc
