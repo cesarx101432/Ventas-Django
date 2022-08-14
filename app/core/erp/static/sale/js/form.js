@@ -94,6 +94,7 @@ var vents = {
 };
 
 $(function () {
+
     $('.select2').select2({
         theme: "bootstrap4",
         language: 'es'
@@ -177,4 +178,29 @@ $(function () {
             vents.calculate_invoice();
             $('td:eq(5)', tblProducts.row(tr.row).node()).html('$' + vents.items.products[tr.row].subtotal.toFixed(2));
         });
+
+    $('.btnClearSearch').on('click', function () {
+        $('input[name="search"]').val('').focus();
+    });
+
+    // event submit
+    $('form').on('submit', function (e) {
+        e.preventDefault();
+
+        if(vents.items.products.length === 0){
+            message_error('Debe al menos tener un item en su detalle de venta');
+            return false;
+        }
+
+        vents.items.date_joined = $('input[name="date_joined"]').val();
+        vents.items.cli = $('select[name="cli"]').val();
+        var parameters = new FormData();
+        parameters.append('action', $('input[name="action"]').val());
+        parameters.append('vents', JSON.stringify(vents.items));
+        submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
+            location.href = '/erp/sale/list/';
+        });
+    });
+
+    vents.list();
 });
