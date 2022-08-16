@@ -201,6 +201,8 @@ $(function () {
             location.href = '/erp/sale/list/';
         });
     });
-
+    
+    // Esto se puso aqui para que funcione bien el editar y calcule bien los valores del iva. // sino tomaría el valor del iva de la base debe
+    // coger el que pusimos al inicializarlo. 
     vents.list();
 });
