@@ -190,7 +190,8 @@ $(function () {
     $('#tblProducts tbody')
         .on('click', 'a[rel="remove"]', function () {
             var tr = tblProducts.cell($(this).closest('td, li')).index();
-            alert_action('Notificación', '¿Estas seguro de eliminar el producto de tu detalle?', function () {
+            alert_action('Notificación', '¿Estas seguro de eliminar el producto de tu detalle?',
+                function () {
                 vents.items.products.splice(tr.row, 1);
                 vents.list();
             });
@@ -222,7 +223,8 @@ $(function () {
         var parameters = new FormData();
         parameters.append('action', $('input[name="action"]').val());
         parameters.append('vents', JSON.stringify(vents.items));
-        submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
+        submit_with_ajax(window.location.pathname, 'Notificación',
+            '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
             location.href = '/erp/sale/list/';
         });
     });
@@ -259,8 +261,8 @@ $(function () {
         $(this).val('').trigger('change.select2');
     });
 
-    vents.list();
     // Esto se puso aqui para que funcione bien el editar y calcule bien los valores del iva. // sino tomaría el valor del iva de la base debe
     // coger el que pusimos al inicializarlo. 
+    vents.list();
 });
 
