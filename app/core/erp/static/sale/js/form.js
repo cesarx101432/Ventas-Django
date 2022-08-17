@@ -90,6 +90,8 @@ var vents = {
 
             }
         });
+        console.clear();
+        console.log(this.items);
     },
 };
 
@@ -183,6 +185,8 @@ $(function () {
         alert_action('Notificación', '¿Estas seguro de eliminar todos los items de tu detalle?', function () {
             vents.items.products = [];
             vents.list();
+        }, function () {
+
         });
     });
 
@@ -192,9 +196,11 @@ $(function () {
             var tr = tblProducts.cell($(this).closest('td, li')).index();
             alert_action('Notificación', '¿Estas seguro de eliminar el producto de tu detalle?',
                 function () {
-                vents.items.products.splice(tr.row, 1);
-                vents.list();
-            });
+                    vents.items.products.splice(tr.row, 1);
+                    vents.list();
+                }, function () {
+
+                });
         })
         .on('change', 'input[name="cant"]', function () {
             console.clear();
@@ -224,9 +230,14 @@ $(function () {
         parameters.append('action', $('input[name="action"]').val());
         parameters.append('vents', JSON.stringify(vents.items));
         submit_with_ajax(window.location.pathname, 'Notificación',
-            '¿Estas seguro de realizar la siguiente acción?', parameters, function () {
-            location.href = '/erp/sale/list/';
-        });
+            '¿Estas seguro de realizar la siguiente acción?', parameters, function (response) {
+                alert_action('Notificación', '¿Desea imprimir la boleta de venta?', function () {
+                    window.open('/erp/sale/invoice/pdf/' + response.id + '/', '_blank');
+                    location.href = '/erp/sale/list/';
+                }, function () {
+                    location.href = '/erp/sale/list/';
+                });
+            });
     });
 
     $('select[name="search"]').select2({
@@ -262,7 +273,7 @@ $(function () {
     });
 
     // Esto se puso aqui para que funcione bien el editar y calcule bien los valores del iva. // sino tomaría el valor del iva de la base debe
-    // coger el que pusimos al inicializarlo. 
+    // coger el que pusimos al inicializarlo.
     vents.list();
 });
 
