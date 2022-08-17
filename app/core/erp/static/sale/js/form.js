@@ -99,7 +99,7 @@ function formatRepo(repo) {
     }
 
     var option = $(
-        '<div class="wrapper container">'+
+        '<div class="wrapper container">' +
         '<div class="row">' +
         '<div class="col-lg-1">' +
         '<img src="' + repo.image + '" class="img-fluid img-thumbnail d-block mx-auto rounded">' +
@@ -109,7 +109,7 @@ function formatRepo(repo) {
         '<p style="margin-bottom: 0;">' +
         '<b>Nombre:</b> ' + repo.name + '<br>' +
         '<b>Categoría:</b> ' + repo.cat.name + '<br>' +
-        '<b>PVP:</b> <span class="badge badge-warning">$'+repo.pvp+'</span>'+
+        '<b>PVP:</b> <span class="badge badge-warning">$' + repo.pvp + '</span>' +
         '</p>' +
         '</div>' +
         '</div>' +
@@ -263,3 +263,4 @@ $(function () {
     // Esto se puso aqui para que funcione bien el editar y calcule bien los valores del iva. // sino tomaría el valor del iva de la base debe
     // coger el que pusimos al inicializarlo. 
 });
+
