@@ -1,0 +1,50 @@
+{% extends 'list.html' %}
+{% load static %}
+{% block head_list %}
+    <script src="{% static 'lib/moment-2.25.3/moment.js' %}"></script>
+    <script src="{% static 'lib/daterangepicker-3.1/spanish.js' %}"></script>
+    <script src="{% static 'lib/daterangepicker-3.1/daterangepicker.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'lib/daterangepicker-3.1/daterangepicker.css' %}"/>
+    <script src="{% static 'sale/js/report.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-chart-bar"></i>
+                {{ title }}
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Rango de fechas:</label>
+                        {{ form.date_range }}
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <table class="table table-bordered" id="data">
+                <thead>
+                <tr>
+                    <th scope="col">Nro</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Fecha de registro</th>
+                    <th scope="col">Subtotal</th>
+                    <th scope="col">Iva</th>
+                    <th scope="col">Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            <a href="{{ list_url }}" class="btn btn-success btn-flat">
+                <i class="fas fa-sync"></i> Actualizar
+            </a>
+        </div>
+    </div>
+{% endblock %}
