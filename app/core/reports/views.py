@@ -7,6 +7,9 @@ from django.views.generic import TemplateView
 from core.erp.models import Sale
 from core.reports.forms import ReportForm
 
+from django.db.models.functions import Coalesce
+from django.db.models import Sum
+
 
 class ReportSaleView(TemplateView):
     template_name = 'sale/report.html'
@@ -18,6 +21,7 @@ class ReportSaleView(TemplateView):
     def post(self, request, *args, **kwargs):
         data = {}
         try:
+            subtotal = iva = total = 0
             action = request.POST['action']
             if action == 'search_report':
                 data = []
@@ -27,6 +31,9 @@ class ReportSaleView(TemplateView):
                 if len(start_date) and len(end_date):
                     search = search.filter(date_joined__range=[start_date, end_date])
                 for s in search:
+                    subtotal +=  s.subtotal
+                    iva +=  s.iva
+                    total +=  s.total
                     data.append([
                         s.id,
                         s.cli.names,
@@ -35,6 +42,15 @@ class ReportSaleView(TemplateView):
                         format(s.iva, '.2f'),
                         format(s.total, '.2f'),
                     ])
+
+                data.append([
+                    '---',
+                    '---',
+                    '---',
+                    format(subtotal, '.2f'),
+                    format(iva, '.2f'),
+                    format(total, '.2f'),
+                ])
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:
@@ -48,4 +64,3 @@ class ReportSaleView(TemplateView):
         context['list_url'] = reverse_lazy('sale_report')
         context['form'] = ReportForm()
         return context
-

@@ -13,6 +13,9 @@ py -m venv env
 env\Scripts\activate.bat
 #  En caso de tener porblemas de activacion en shell de Visual Studio correr:
 \env\Scripts\Activate.ps1
+
+#Para Linux 
+source env/bin/activate
 ```
 
 ## 2.- Instalacion del proyecto
