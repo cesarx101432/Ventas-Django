@@ -9,6 +9,8 @@ from django.views.generic import TemplateView
 
 from core.erp.models import Sale, Product, DetSale
 
+from random import randint
+
 
 class DashboardView(TemplateView):
     template_name = 'dashboard.html'
@@ -34,6 +36,9 @@ class DashboardView(TemplateView):
                     'colorByPoint': True,
                     'data': self.get_graph_sales_products_year_month(),
                 }
+            elif action == 'get_graph_online':
+                data = {'y': randint(1, 100)}
+                print(data)
             else:
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:
@@ -45,7 +50,7 @@ class DashboardView(TemplateView):
         try:
             year = datetime.now().year
             for m in range(1, 13):
-                total = 0;
+                total = 0
                 search = (Sale.objects.filter(date_joined__year=year, date_joined__month=m))
                 for s in search:
                     total += s.total
@@ -60,15 +65,10 @@ class DashboardView(TemplateView):
         month = datetime.now().month
         try:
             for p in Product.objects.all():
-                
-                total = 0;
+                total = 0
                 search = DetSale.objects.filter(sale__date_joined__year=year, sale__date_joined__month=month, prod_id=p.id)
                 for s in search:
                     total =+ s.subtotal
-                    print(s.subtotal)
-
-
-              
                 if total > 0:
                     data.append({
                         'name': p.name,
