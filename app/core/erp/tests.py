@@ -1,8 +1,9 @@
-from config.wsgi import *
 import random
 from datetime import datetime
+
 from django.db.models import Sum
 from django.db.models.functions import Coalesce
+
 from core.erp.models import Sale, DetSale
 
 for m in range(0, 6):
