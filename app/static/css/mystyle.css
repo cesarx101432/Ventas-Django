@@ -21,11 +21,11 @@ table.table-bordered.dataTable tbody td {
     font-size: 14px;
 }
 
-.card-footer{
+.card-footer {
     border-top: 1px solid #dee2e6;
 }
 
-.btn{
+.btn {
     color: white !important;
 }
 
@@ -33,6 +33,7 @@ td.details-control {
     background: url('../lib/datatables-1.10.20/images/details_open.png') no-repeat center center;
     cursor: pointer;
 }
+
 tr.shown td.details-control {
     background: url('../lib/datatables-1.10.20/images/details_close.png') no-repeat center center;
 }
