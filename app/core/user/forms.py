@@ -10,7 +10,7 @@ class UserForm(ModelForm):
 
     class Meta:
         model = User
-        fields = 'first_name', 'last_name', 'email', 'username', 'password', 'image'
+        fields = 'first_name', 'last_name', 'email', 'username', 'password', 'image',
         widgets = {
             'first_name': TextInput(
                 attrs={
@@ -32,7 +32,7 @@ class UserForm(ModelForm):
                     'placeholder': 'Ingrese su username',
                 }
             ),
-            'password': PasswordInput(
+            'password': PasswordInput(render_value=True,
                 attrs={
                     'placeholder': 'Ingrese su password',
                 }
