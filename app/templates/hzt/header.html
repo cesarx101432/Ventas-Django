@@ -21,17 +21,35 @@
                     <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                        class="nav-link dropdown-toggle"><i class="fas fa-folder-open"></i> Mantenimientos</a>
                     <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                        <li><a href="{% url 'erp:category_list' %}" class="dropdown-item"><i class="fas fa-truck-loading"></i> Categorías</a></li>
-                        <li><a href="{% url 'erp:product_list' %}" class="dropdown-item"><i class="fas fa-boxes"></i> Productos</a></li>
-                        <li><a href="{% url 'erp:client_list' %}" class="dropdown-item"><i class="fas fa-users"></i> Clientes</a></li>
-                        <li><a href="{% url 'erp:sale_list' %}" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Ventas</a></li>
-                        <li><a href="{% url 'sale_report' %}" class="dropdown-item"><i class="fas fa-chart-bar"></i> Reporte de Ventas</a></li>
-                        <li><a href="{% url 'user:user_list' %}" class="dropdown-item"><i class="fas fa-user-friends"></i> Usuarios</a></li>
+                        <li><a href="{% url 'erp:category_list' %}" class="dropdown-item"><i
+                                class="fas fa-truck-loading"></i> Categorías</a></li>
+                        <li><a href="{% url 'erp:product_list' %}" class="dropdown-item"><i class="fas fa-boxes"></i>
+                            Productos</a></li>
+                        <li><a href="{% url 'erp:client_list' %}" class="dropdown-item"><i class="fas fa-users"></i>
+                            Clientes</a></li>
+                        <li><a href="{% url 'erp:sale_list' %}" class="dropdown-item"><i
+                                class="fas fa-shopping-cart"></i> Ventas</a></li>
+                        <li><a href="{% url 'sale_report' %}" class="dropdown-item"><i class="fas fa-chart-bar"></i>
+                            Reporte de Ventas</a></li>
+                        <li><a href="{% url 'user:user_list' %}" class="dropdown-item"><i
+                                class="fas fa-user-friends"></i> Usuarios</a></li>
                     </ul>
                 </li>
             </ul>
         </div>
         <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+            {% if request.user.groups.all %}
+                <li class="nav-item dropdown">
+                    <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                       class="nav-link dropdown-toggle">Dropdown</a>
+                    <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow"
+                        style="left: 0px; right: inherit;">
+                        {% for g in request.user.groups.all %}
+                            <li><a href="#" class="dropdown-item">{{ g.name }} </a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endif %}
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
                     <i class="fas fa-users-cog"></i> {{ request.user.username }}
