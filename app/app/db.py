@@ -18,7 +18,10 @@ POSTGRESQL = {
         'USER': 'postgres',
         'PASSWORD': '123',
         'HOST': 'localhost',
-        'PORT': '5432'
+        'PORT': '5432',
+        'OPTIONS': {
+            'options': '-c search_path=prueba'
+        },
     }
 }
 

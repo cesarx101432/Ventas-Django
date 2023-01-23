@@ -45,7 +45,17 @@
             e.preventDefault();
             var parameters = new FormData(this);
             submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de eliminar el siguiente registro?', parameters, function () {
-                location.href = '{{ list_url }}';
+                Swal.fire({
+                    title: 'Alerta',
+                    text: 'Registro eliminado correctamente',
+                    icon: 'success',
+                    timer: 2000,
+                    onClose: () => {
+                        location.href = '{{ list_url }}';
+                    }
+                }).then((result) => {
+
+                });
             });
         });
     </script>
