@@ -14,8 +14,7 @@ $(function () {
         },
         columns: [
             {"data": "id"},
-            {"data": "first_name"},
-            {"data": "last_name"},
+            {"data": "full_name"},
             {"data": "username"},
             {"data": "date_joined"},
             {"data": "image"},
@@ -23,7 +22,7 @@ $(function () {
         ],
         columnDefs: [
             {
-                targets: [-2],
+                targets: [-3],
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {

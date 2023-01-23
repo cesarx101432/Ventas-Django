@@ -19,4 +19,5 @@ class User(AbstractUser):
             item['last_login'] = self.last_login.strftime('%Y-%m-%d')
         item['date_joined'] = self.date_joined.strftime('%Y-%m-%d')
         item['image'] = self.get_image()
+        item['full_name'] = self.get_full_name()
         return item

@@ -10,7 +10,7 @@ class UserForm(ModelForm):
 
     class Meta:
         model = User
-        fields = 'first_name', 'last_name', 'email', 'username', 'password', 'image',
+        fields = 'first_name', 'last_name', 'email', 'username', 'password', 'image', 'groups'
         widgets = {
             'first_name': TextInput(
                 attrs={
@@ -33,12 +33,17 @@ class UserForm(ModelForm):
                 }
             ),
             'password': PasswordInput(render_value=True,
-                attrs={
-                    'placeholder': 'Ingrese su password',
-                }
-            ),
+                                      attrs={
+                                          'placeholder': 'Ingrese su password',
+                                      }
+                                      ),
+            'groups': SelectMultiple(attrs={
+                'class': 'form-control select2',
+                'style': 'width: 100%',
+                'multiple': 'multiple'
+            })
         }
-        exclude = ['groups', 'user_permissions', 'last_login', 'date_joined', 'is_superuser', 'is_active', 'is_staff']
+        exclude = ['user_permissions', 'last_login', 'date_joined', 'is_superuser', 'is_active', 'is_staff']
 
     def save(self, commit=True):
         data = {}
@@ -54,6 +59,9 @@ class UserForm(ModelForm):
                     if user.password != pwd:
                         u.set_password(pwd)
                 u.save()
+
+                for g in self.cleaned_data['groups']:
+                    u.groups.add(g)
             else:
                 data['error'] = form.errors
         except Exception as e:
