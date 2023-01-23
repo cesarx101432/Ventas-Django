@@ -4,6 +4,7 @@ import os
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
+from django.db.models import Q
 from django.http import HttpResponse
 from django.http import JsonResponse, HttpResponseRedirect
 from django.template.loader import get_template
@@ -15,7 +16,7 @@ from xhtml2pdf import pisa
 
 from core.erp.forms import SaleForm
 from core.erp.mixins import ValidatePermissionRequiredMixin
-from core.erp.models import Sale, Product, DetSale
+from core.erp.models import Sale, Product, DetSale, Client
 
 
 class SaleListView(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListView):
@@ -97,6 +98,15 @@ class SaleCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Create
                         det.subtotal = float(i['subtotal'])
                         det.save()
                     data = {'id': sale.id}
+            elif action == 'search_clients':
+                data = []
+                term = request.POST['term']
+                clients = Client.objects.filter(
+                    Q(names__icontains=term) | Q(surnames__icontains=term) | Q(dni__icontains=term))[0:10]
+                for i in clients:
+                    item = i.toJSON()
+                    item['text'] = i.get_full_name()
+                    data.append(item)
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
         except Exception as e:
@@ -157,6 +167,15 @@ class SaleUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Update
                         det.subtotal = float(i['subtotal'])
                         det.save()
                     data = {'id': sale.id}
+            elif action == 'search_clients':
+                data = []
+                term = request.POST['term']
+                clients = Client.objects.filter(
+                    Q(names__icontains=term) | Q(surnames__icontains=term) | Q(dni__icontains=term))[0:10]
+                for i in clients:
+                    item = i.toJSON()
+                    item['text'] = i.get_full_name()
+                    data.append(item)
             else:
                 data['error'] = 'No ha ingresado a ninguna opción'
         except Exception as e:

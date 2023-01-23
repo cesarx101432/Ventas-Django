@@ -147,6 +147,33 @@ $(function () {
     })
         .val(0.12);
 
+    // search clients
+
+    $('select[name="cli"]').select2({
+        theme: "bootstrap4",
+        language: 'es',
+        allowClear: true,
+        ajax: {
+            delay: 250,
+            type: 'POST',
+            url: window.location.pathname,
+            data: function (params) {
+                var queryParameters = {
+                    term: params.term,
+                    action: 'search_clients'
+                }
+                return queryParameters;
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            },
+        },
+        placeholder: 'Ingrese una descripción',
+        minimumInputLength: 1,
+    });
+
     // search products
 
     /*$('input[name="search"]').autocomplete({
