@@ -7,10 +7,11 @@ from django.urls import reverse_lazy
 from django.views.generic import FormView, RedirectView
 
 import app.settings as setting
+from core.login.forms import ResetPasswordForm
 
 
 class LoginFormView(LoginView):
-    template_name = 'login.html'
+    template_name = 'login/login.html'
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -25,7 +26,7 @@ class LoginFormView(LoginView):
 
 class LoginFormView2(FormView):
     form_class = AuthenticationForm
-    template_name = 'login.html'
+    template_name = 'login/login.html'
     success_url = reverse_lazy(setting.LOGIN_REDIRECT_URL)
 
     def dispatch(self, request, *args, **kwargs):
@@ -49,3 +50,21 @@ class LogoutView(RedirectView):
     def dispatch(self, request, *args, **kwargs):
         logout(request)
         return super().dispatch(request, *args, **kwargs)
+
+
+class ResetPasswordView(FormView):
+    form_class = ResetPasswordForm
+    template_name = 'login/resetpwd.html'
+    success_url = reverse_lazy(setting.LOGIN_REDIRECT_URL)
+
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        pass
+        return HttpResponseRedirect(self.success_url)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Reseteo de Contraseña'
+        return context
