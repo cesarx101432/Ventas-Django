@@ -1,0 +1,63 @@
+{% extends 'login/base.html' %}
+
+{% block content %}
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="{% url 'index' %}"><b>Ha</b>des</a>
+        </div>
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Cambio de contraseña</p>
+                <form action=".." method="post">
+                    <input type="hidden" name="next" value="{{ next }}">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        {{ form.password }}
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        {{ form.confirmPassword }}
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <button type="submit" class="btn btn-primary btn-block">
+                                <i class="fas fa-envelope"></i> Enviar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script type="application/javascript">
+            $(function () {
+                $('form').on('submit', function (e) {
+                    e.preventDefault();
+                    var parameters = new FormData(this);
+                    submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de resetear tu contraseña?', parameters, function () {
+                        Swal.fire({
+                            title: 'Notificación',
+                            text: 'Se ha enviado un correo electrónico con los pasos a seguir para que pueda resetear su contraseña',
+                            icon: 'success',
+                            timer: 5000,
+                            onClose: () => {
+                                location.href = '/';
+                            }
+                        }).then((result) => {
+
+                        });
+                    });
+                });
+            });
+        </script>
+    </div>
+{% endblock %}
