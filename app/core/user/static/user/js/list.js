@@ -18,6 +18,7 @@ $(function () {
             {"data": "username"},
             {"data": "date_joined"},
             {"data": "image"},
+            {"data": "groups"},
             {"data": "id"},
         ],
         columnDefs: [
@@ -26,7 +27,19 @@ $(function () {
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
-                    return '<img src="'+row.image+'" class="img-fluid mx-auto d-block" style="width: 20px; height: 20px;">';
+                    return '<img src="' + row.image + '" class="img-fluid mx-auto d-block" style="width: 20px; height: 20px;">';
+                }
+            },
+            {
+                targets: [-2],
+                class: 'text-center',
+                orderable: false,
+                render: function (data, type, row) {
+                    var html = '';
+                    $.each(row.groups, function (key, value) {
+                        html += '<span class="badge badge-success">' + value.name + '</span> ';
+                    });
+                    return html;
                 }
             },
             {

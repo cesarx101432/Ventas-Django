@@ -14,10 +14,11 @@ class User(AbstractUser):
         return '{}{}'.format(STATIC_URL, 'img/empty.png')
 
     def toJSON(self):
-        item = model_to_dict(self, exclude=['password','groups', 'user_permissions', 'last_login'])
+        item = model_to_dict(self, exclude=['password','user_permissions', 'last_login'])
         if self.last_login:
             item['last_login'] = self.last_login.strftime('%Y-%m-%d')
         item['date_joined'] = self.date_joined.strftime('%Y-%m-%d')
         item['image'] = self.get_image()
         item['full_name'] = self.get_full_name()
+        item['groups'] = [{'id': g.id, 'name': g.name} for g in self.groups.all()]
         return item
