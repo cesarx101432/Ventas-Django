@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from django.forms import *
+from django import forms
+from django.forms import ModelForm
 
 from core.erp.models import Category, Product, Client, Sale
 
@@ -17,12 +18,12 @@ class CategoryForm(ModelForm):
         model = Category
         fields = '__all__'
         widgets = {
-            'name': TextInput(
+            'name': forms.TextInput(
                 attrs={
                     'placeholder': 'Ingrese un nombre',
                 }
             ),
-            'desc': Textarea(
+            'desc': forms.Textarea(
                 attrs={
                     'placeholder': 'Ingrese un nombre',
                     'rows': 3,
@@ -53,12 +54,12 @@ class ProductForm(ModelForm):
         model = Product
         fields = '__all__'
         widgets = {
-            'name': TextInput(
+            'name': forms.TextInput(
                 attrs={
                     'placeholder': 'Ingrese un nombre',
                 }
             ),
-            'cat': Select(
+            'cat': forms.Select(
                 attrs={
                     'class': 'select2',
                     'style': 'width: 100%'
@@ -88,32 +89,32 @@ class ClientForm(ModelForm):
         model = Client
         fields = '__all__'
         widgets = {
-            'names': TextInput(
+            'names': forms.TextInput(
                 attrs={
                     'placeholder': 'Ingrese sus nombres',
                 }
             ),
-            'surnames': TextInput(
+            'surnames': forms.TextInput(
                 attrs={
                     'placeholder': 'Ingrese sus apellidos',
                 }
             ),
-            'dni': TextInput(
+            'dni': forms.TextInput(
                 attrs={
                     'placeholder': 'Ingrese su dni',
                 }
             ),
-            'date_birthday': DateInput(format='%Y-%m-%d',
+            'date_birthday': forms.DateInput(format='%Y-%m-%d',
                                        attrs={
                                            'value': datetime.now().strftime('%Y-%m-%d'),
                                        }
                                        ),
-            'address': TextInput(
+            'address': forms.TextInput(
                 attrs={
                     'placeholder': 'Ingrese su dirección',
                 }
             ),
-            'gender': Select()
+            'gender': forms.Select()
         }
 
     def save(self, commit=True):
@@ -136,13 +137,13 @@ class ClientForm(ModelForm):
     #     return cleaned
 
 
-class TestForm(Form):
-    categories = ModelChoiceField(queryset=Category.objects.all(), widget=Select(attrs={
+class TestForm(forms.Form):
+    categories = forms.ModelChoiceField(queryset=Category.objects.all(), widget=forms.Select(attrs={
         'class': 'form-control select2',
         'style': 'width: 100%'
     }))
 
-    products = ModelChoiceField(queryset=Product.objects.none(), widget=Select(attrs={
+    products = forms.ModelChoiceField(queryset=Product.objects.none(), widget=forms.Select(attrs={
         'class': 'form-control select2',
         'style': 'width: 100%'
     }))
@@ -152,7 +153,7 @@ class TestForm(Form):
     #     'placeholder': 'Ingrese una descripción'
     # }))
 
-    search = ModelChoiceField(queryset=Product.objects.none(), widget=Select(attrs={
+    search = forms.ModelChoiceField(queryset=Product.objects.none(), widget=forms.Select(attrs={
         'class': 'form-control select2',
         'style': 'width: 100%'
     }))
@@ -166,11 +167,11 @@ class SaleForm(ModelForm):
         model = Sale
         fields = '__all__'
         widgets = {
-            'cli': Select(attrs={
+            'cli': forms.Select(attrs={
                 'class': 'form-control select2',
                 'style': 'width: 100%'
             }),
-            'date_joined': DateInput(
+            'date_joined': forms.DateInput(
                 format='%Y-%m-%d',
                 attrs={
                     'value': datetime.now().strftime('%Y-%m-%d'),
@@ -181,14 +182,14 @@ class SaleForm(ModelForm):
                     'data-toggle': 'datetimepicker'
                 }
             ),
-            'iva': TextInput(attrs={
+            'iva': forms.TextInput(attrs={
                 'class': 'form-control',
             }),
-            'subtotal': TextInput(attrs={
+            'subtotal': forms.TextInput(attrs={
                 'readonly': True,
                 'class': 'form-control',
             }),
-            'total': TextInput(attrs={
+            'total': forms.TextInput(attrs={
                 'readonly': True,
                 'class': 'form-control',
             })
