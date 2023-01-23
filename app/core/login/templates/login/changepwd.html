@@ -31,10 +31,14 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <button type="submit" class="btn btn-primary btn-block">
-                                <i class="fas fa-envelope"></i> Enviar
+                                <i class="fas fa-lock"></i> Cambiar password
                             </button>
                         </div>
                     </div>
+                    <p class="text-center mt-2" style="font-size: 13px;">
+                        Si deseas volver al login da un click <a
+                            href="{% url 'login' %}">aqui </a>
+                    </p>
                 </form>
             </div>
         </div>
@@ -43,14 +47,14 @@
                 $('form').on('submit', function (e) {
                     e.preventDefault();
                     var parameters = new FormData(this);
-                    submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de resetear tu contraseña?', parameters, function () {
+                    submit_with_ajax(window.location.pathname, 'Notificación', '¿Estas seguro de cambiar tu contraseña?', parameters, function () {
                         Swal.fire({
                             title: 'Notificación',
-                            text: 'Se ha enviado un correo electrónico con los pasos a seguir para que pueda resetear su contraseña',
+                            text: 'Tu contraseña ha sido cambiada correctamente',
                             icon: 'success',
                             timer: 5000,
                             onClose: () => {
-                                location.href = '/';
+                                location.href = '{{ login_url }}';
                             }
                         }).then((result) => {
 

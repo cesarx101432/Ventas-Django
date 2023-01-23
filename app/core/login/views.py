@@ -139,7 +139,14 @@ class ChangePasswordView(FormView):
     def post(self, request, *args, **kwargs):
         data = {}
         try:
-            pass
+            form = ChangePasswordForm(request.POST)
+            if form.is_valid():
+                user = User.objects.get(token=self.kwargs['token'])
+                user.set_password(request.POST['password'])
+                user.token = uuid.uuid4()
+                user.save()
+            else:
+                data['error'] = form.errors
         except Exception as e:
             data['error'] = str(e)
         return JsonResponse(data, safe=False)
@@ -147,4 +154,5 @@ class ChangePasswordView(FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Reseteo de Contraseña'
+        context['login_url'] = settings.LOGIN_URL
         return context
