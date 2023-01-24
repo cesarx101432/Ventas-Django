@@ -1,5 +1,6 @@
 {% extends 'list.html' %}
 {% load static %}
+{% load widget_tweaks %}
 {% block head_list %}
     <link href="{% static 'lib/jquery-ui-1.12.1/jquery-ui.min.css' %}" rel="stylesheet"/>
     <script src="{% static 'lib/jquery-ui-1.12.1/jquery-ui.min.js' %}"></script>
@@ -20,7 +21,7 @@
 {% endblock %}
 
 {% block content %}
-    <form method="post">
+    <form id="frmSale" method="post">
         <div class="card card-primary">
             <div class="card-header">
                 <h3 class="card-title">
@@ -82,7 +83,15 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Cliente:</label>
-                                    {{ form.cli }}
+                                    <div class="input-group">
+                                        {{ form.cli }}
+                                        <div class="input-group-append">
+                                            <button class="btn btn-success btn-flat btnAddClient" type="button">
+                                                <i class="fas fa-user-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="form-group">
                                     <label>Subtotal:</label>
@@ -115,6 +124,39 @@
             </div>
         </div>
     </form>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModalClient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <form id="frmClient" enctype="multipart/form-data" method="post">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            <b><i class="fas fa-user-plus"></i> Nuevo registro de un cliente</b>
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {% for field in frmClient.visible_fields %}
+                            <div class="form-group">
+                                <label for="email">{{ field.label }}:</label>
+                                {{ field|add_class:'form-control'|attr:'autocomplete:off' }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">
+                            <i class="fas fa-save"></i> Guardar Cliente
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
     <script>
         vents.items.products = {{ det|safe }};
         // Se removio el vents.list(); para calcular bien el iva en el editar. Revisar al final del archivo form.js se lo puso.

@@ -169,8 +169,8 @@ class SaleForm(ModelForm):
         fields = '__all__'
         widgets = {
             'cli': forms.Select(attrs={
-                'class': 'form-control select2',
-                'style': 'width: 100%'
+                'class': 'custom-select select2',
+                # 'style': 'width: 100%'
             }),
             'date_joined': forms.DateInput(
                 format='%Y-%m-%d',
