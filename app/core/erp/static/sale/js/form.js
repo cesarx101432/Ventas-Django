@@ -263,6 +263,10 @@ $(function () {
         $('input[name="search"]').val('').focus();
     });
 
+    $('.btnSearchProducts').on('click', function () {
+         $('#myModalSearchProducts').modal('show');
+    });
+
     // event submit
     $('#frmSale').on('submit', function (e) {
         e.preventDefault();
