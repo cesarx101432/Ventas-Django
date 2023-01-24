@@ -188,6 +188,9 @@ $(function () {
         parameters.append('action', 'create_client');
         submit_with_ajax(window.location.pathname, 'Notificación',
             '¿Estas seguro de crear al siguiente cliente?', parameters, function (response) {
+                //console.log(response);
+                var newOption = new Option(response.full_name, response.id, false, true);
+                $('select[name="cli"]').append(newOption).trigger('change');
                 $('#myModalClient').modal('hide');
             });
     });

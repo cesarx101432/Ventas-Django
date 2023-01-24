@@ -140,6 +140,12 @@ class SaleUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Update
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
+    def get_form(self, form_class=None):
+        instance = self.get_object()
+        form = SaleForm(instance=instance)
+        form.fields['cli'].queryset = Client.objects.filter(id=instance.cli.id)
+        return form
+
     def post(self, request, *args, **kwargs):
         data = {}
         try:
