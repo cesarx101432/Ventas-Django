@@ -1,4 +1,5 @@
 var tblProducts;
+var tblSearchProducts;
 var vents = {
     items: {
         cli: '',
@@ -197,7 +198,7 @@ $(function () {
 
     // search products
 
-    /*$('input[name="search"]').autocomplete({
+    $('input[name="search"]').autocomplete({
         source: function (request, response) {
             $.ajax({
                 url: window.location.pathname,
@@ -226,7 +227,7 @@ $(function () {
             vents.add(ui.item);
             $(this).val('');
         }
-    });*/
+    });
 
     $('.btnRemoveAll').on('click', function () {
         if (vents.items.products.length === 0) return false;
@@ -264,8 +265,69 @@ $(function () {
     });
 
     $('.btnSearchProducts').on('click', function () {
-         $('#myModalSearchProducts').modal('show');
+        tblSearchProducts = $('#tblSearchProducts').DataTable({
+            responsive: true,
+            autoWidth: false,
+            destroy: true,
+            deferRender: true,
+            ajax: {
+                url: window.location.pathname,
+                type: 'POST',
+                data: {
+                    'action': 'search_products',
+                    'term': $('input[name="search"]').val()
+                },
+                dataSrc: ""
+            },
+            columns: [
+                {"data": "name"},
+                {"data": "cat.name"},
+                {"data": "image"},
+                {"data": "pvp"},
+                {"data": "id"},
+            ],
+            columnDefs: [
+                {
+                    targets: [-3],
+                    class: 'text-center',
+                    orderable: false,
+                    render: function (data, type, row) {
+                        return '<img src="' + data + '" class="img-fluid d-block mx-auto" style="width: 20px; height: 20px;">';
+                    }
+                },
+                {
+                    targets: [-2],
+                    class: 'text-center',
+                    orderable: false,
+                    render: function (data, type, row) {
+                        return '$' + parseFloat(data).toFixed(2);
+                    }
+                },
+                {
+                    targets: [-1],
+                    class: 'text-center',
+                    orderable: false,
+                    render: function (data, type, row) {
+                        var buttons = '<a rel="add" class="btn btn-success btn-xs btn-flat"><i class="fas fa-plus"></i></a> ';
+                        return buttons;
+                    }
+                },
+            ],
+            initComplete: function (settings, json) {
+
+            }
+        });
+        $('#myModalSearchProducts').modal('show');
     });
+
+    $('#tblSearchProducts tbody')
+        .on('click', 'a[rel="add"]', function () {
+            var tr = tblSearchProducts.cell($(this).closest('td, li')).index();
+            var product = tblSearchProducts.row(tr.row).data();
+            product.cant = 1;
+            product.subtotal = 0.00;
+            vents.add(product);
+        });
 
     // event submit
     $('#frmSale').on('submit', function (e) {
@@ -292,7 +354,7 @@ $(function () {
             });
     });
 
-    $('select[name="search"]').select2({
+    /*$('select[name="search"]').select2({
         theme: "bootstrap4",
         language: 'es',
         allowClear: true,
@@ -322,7 +384,7 @@ $(function () {
         data.subtotal = 0.00;
         vents.add(data);
         $(this).val('').trigger('change.select2');
-    });
+    });*/
 
     // Esto se puso aqui para que funcione bien el editar y calcule bien los valores del iva. // sino tomaría el valor del iva de la base debe
     // coger el que pusimos al inicializarlo.
