@@ -38,13 +38,20 @@ var vents = {
             data: this.items.products,
             columns: [
                 {"data": "id"},
-                {"data": "name"},
-                {"data": "cat.name"},
+                {"data": "full_name"},
+                {"data": "stock"},
                 {"data": "pvp"},
                 {"data": "cant"},
                 {"data": "subtotal"},
             ],
             columnDefs: [
+                {
+                    targets: [-4],
+                    class: 'text-center',
+                    render: function (data, type, row) {
+                        return '<span class="badge badge-secondary">'+data+'</span>';
+                    }
+                },
                 {
                     targets: [0],
                     class: 'text-center',
@@ -82,7 +89,7 @@ var vents = {
 
                 $(row).find('input[name="cant"]').TouchSpin({
                     min: 1,
-                    max: 1000000000,
+                    max: data.stock,
                     step: 1
                 });
 
@@ -114,8 +121,8 @@ function formatRepo(repo) {
         '<div class="col-lg-11 text-left shadow-sm">' +
         //'<br>' +
         '<p style="margin-bottom: 0;">' +
-        '<b>Nombre:</b> ' + repo.name + '<br>' +
-        '<b>Categoría:</b> ' + repo.cat.name + '<br>' +
+        '<b>Nombre:</b> ' + repo.full_name + '<br>' +
+        '<b>Stock:</b> ' + repo.stock + '<br>' +
         '<b>PVP:</b> <span class="badge badge-warning">$' + repo.pvp + '</span>' +
         '</p>' +
         '</div>' +
@@ -283,19 +290,26 @@ $(function () {
                 dataSrc: ""
             },
             columns: [
-                {"data": "name"},
-                {"data": "cat.name"},
+                {"data": "full_name"},
                 {"data": "image"},
+                {"data": "stock"},
                 {"data": "pvp"},
                 {"data": "id"},
             ],
             columnDefs: [
                 {
-                    targets: [-3],
+                    targets: [-4],
                     class: 'text-center',
                     orderable: false,
                     render: function (data, type, row) {
                         return '<img src="' + data + '" class="img-fluid d-block mx-auto" style="width: 20px; height: 20px;">';
+                    }
+                },
+                {
+                    targets: [-3],
+                    class: 'text-center',
+                    render: function (data, type, row) {
+                        return '<span class="badge badge-secondary">'+data+'</span>';
                     }
                 },
                 {

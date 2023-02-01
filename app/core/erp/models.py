@@ -37,6 +37,7 @@ class Product(models.Model):
 
     def toJSON(self):
         item = model_to_dict(self)
+        item['full_name'] = '{} / {}'.format(self.name, self.cat.name)
         item['cat'] = self.cat.toJSON()
         item['image'] = self.get_image()
         item['pvp'] = format(self.pvp, '.2f')
