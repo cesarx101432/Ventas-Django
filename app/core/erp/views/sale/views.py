@@ -73,21 +73,23 @@ class SaleCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Create
             action = request.POST['action']
             if action == 'search_products':
                 data = []
+                ids_exclude = json.loads(request.POST['ids'])
                 term = request.POST['term'].strip()
                 products = Product.objects.filter(stock__gt=0)
                 if len(term):
                     products = products.filter(name__icontains=term)
-                for i in products[0:10]:
+                for i in products.exclude(id__in=ids_exclude)[0:10]:
                     item = i.toJSON()
                     item['value'] = i.name
                     # item['text'] = i.name
                     data.append(item)
             elif action == 'search_autocomplete':
                 data = []
+                ids_exclude = json.loads(request.POST['ids'])
                 term = request.POST['term'].strip()
                 data.append({'id': term, 'text':term})
                 products = Product.objects.filter(name__icontains=term, stock__gt=0)
-                for i in products[0:10]:
+                for i in products.exclude(id__in=ids_exclude)[0:10]:
                     item = i.toJSON()
                     item['text'] = i.name
                     data.append(item)
@@ -166,21 +168,23 @@ class SaleUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Update
             action = request.POST['action']
             if action == 'search_products':
                 data = []
+                ids_exclude = json.loads(request.POST['ids'])
                 term = request.POST['term'].strip()
                 products = Product.objects.filter(stock__gt=0)
                 if len(term):
                     products = products.filter(name__icontains=term)
-                for i in products[0:10]:
+                for i in products.exclude(id__in=ids_exclude)[0:10]:
                     item = i.toJSON()
                     item['value'] = i.name
                     # item['text'] = i.name
                     data.append(item)
             elif action == 'search_autocomplete':
                 data = []
+                ids_exclude = json.loads(request.POST['ids'])
                 term = request.POST['term'].strip()
                 data.append({'id': term, 'text': term})
                 products = Product.objects.filter(name__icontains=term, stock__gt=0)
-                for i in products[0:10]:
+                for i in products.exclude(id__in=ids_exclude)[0:10]:
                     item = i.toJSON()
                     item['text'] = i.name
                     data.append(item)

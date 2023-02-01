@@ -101,6 +101,12 @@ class Sale(models.Model):
         item['det'] = [i.toJSON() for i in self.detsale_set.all()]
         return item
 
+    def delete(self, using=None, keep_parents=False):
+        for det in self.detsale_set.all():
+            det.prod.stock += det.cant
+            det.prod.save()
+        super(Sale, self).delete()
+
     class Meta:
         verbose_name = 'Venta'
         verbose_name_plural = 'Ventas'
