@@ -1,94 +1,108 @@
 <!DOCTYPE html>
-<html>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<style>
-    .img-invoice {
-        width: 50px;
-        text-align: center;
-        margin: 0 auto;
-    }
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
 
-    .head {
-        text-align: center;
-        text-transform: uppercase;
-    }
+        * {
+            color: black;
+        }
 
-    #invoice thead tr th {
-        text-align: left;
-        border-bottom: 1px solid black;
-        border-top: 1px solid black;
-        padding-top: 4px;
-    }
+        body {
+            font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+            padding: 0;
+            margin: 0;
+            color: black;
+        }
 
-    #invoice thead tr {
-        margin-bottom: 0;
-        padding-bottom: 0;
-    }
+        .name-company {
+            font-size: 30px;
+            padding: 0;
+            margin: 0;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+        }
 
-    #invoice tbody tr {
-        padding: 0;
-    }
+        table thead tr th {
+            border: 1px solid black !important;
+            padding: 3px;
+        }
 
-    .text-center{
-        text-align: center;
-    }
-</style>
+        table tbody tr td {
+            border: 1px solid black;
+            padding: 3px;
+        }
+
+        .img-logo {
+            margin-top: 10px;
+            width: 75px;
+            height: 75px;
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
 <body>
-<img src="{{ icon }}" class="img-invoice">
-<p class="head">
-    {{ comp.name|upper }}<br>
-    {{ comp.ruc }}<br>
-    {{ comp.address|upper }}
-</p>
-<p>
-    <b>FACTURA:</b> {{ sale.id }}<br>
-    <b>FECHA DE VENTA:</b> {{ sale.date_joined }}<br>
-    <b>CLIENTE:</b> {{ sale.cli.names|upper }}<br>
-    <b>DNI:</b> {{ sale.cli.dni }}<br>
-</p>
-<table id="invoice">
-    <thead>
-    <tr>
-        <th style="width: 20%;">CATEGORIA</th>
-        <th style="width: 40%;">PRODUCTO</th>
-        <th style="width: 10%;">CANT</th>
-        <th style="width: 15%;">P.UNITARIO</th>
-        <th style="width: 15%;">TOTAL</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for d in sale.detsale_set.all %}
-        <tr {% if forloop.first %}style="padding-top: 3px;" {% endif %}>
-            <td>{{ d.prod.cat.name }}</td>
-            <td>{{ d.prod.name }}</td>
-            <td class="text-center">{{ d.cant }}</td>
-            <td class="text-center">${{ d.price }}</td>
-            <td style="text-align: right;">${{ d.subtotal }}</td>
+<div class="container-fluid">
+    <img src="{% static 'img/logo.png' %}" class="img-fluid d-block mx-auto img-logo">
+    <h1 class="name-company">{{ company.name }}</h1>
+    <p class="text-center">
+        Cdla. Dager, Calle Rio Zamora entre Av.Tumbes y Av. Tarqui<br>
+        Celular: +593 0979014551<br>
+        Teléfono: 297541221<br>
+        Web: algorisoft.com<br>
+    </p>
+    <p>
+        <b>Cliente:</b> {{ sale.cli.get_full_name }}<br>
+        <b>Número de cedula:</b> {{ sale.cli.dni }}<br>
+        <b>Fecha de venta:</b> {{ sale.date_joined|date:'c' }}<br>
+    </p>
+    <table class="table" style="width: 100%;">
+        <thead>
+        <tr style="border: 1px solid black;">
+            <th style="width: 20%;">Cantidad</th>
+            <th style="width: 40%;">Producto</th>
+            <th style="width: 20%;">P.Unitario</th>
+            <th style="width: 20%;" class="text-right">Subtotal</th>
         </tr>
-    {% endfor %}
-    <tr style="border-top: 1px solid black; padding-top: 4px;">
-        <td colspan="4"><b>SUBTOTAL</b></td>
-        <td style="text-align: right">${{ sale.subtotal }}</td>
-    </tr>
-    <tr style="padding-top: 0px;">
-        <td colspan="4"><b>IVA 12%</b></td>
-        <td style="text-align: right">${{ sale.iva }}</td>
-    </tr>
-    <tr style="padding-top: 0px;">
-        <td colspan="4"><b>TOTAL A PAGAR</b></td>
-        <td style="text-align: right">${{ sale.total }}</td>
-    </tr>
-    </tbody>
-</table>
-<table style="margin-top: 250px;">
-    <thead>
-    <tr>
-        <th>****GRACIAS POR SU COMPRA****</th>
-    </tr>
-    <tr>
-        <th>NOSE ACEPTAN CAMBIOS NI DEVOLUCIONES</th>
-    </tr>
-    </thead>
-</table>
+        </thead>
+        <tbody>
+        {% for det in sale.detsale_set.all %}
+            <tr>
+                <td class="text-center">{{ det.cant }}</td>
+                <td>{{ det.prod.name }}</td>
+                <td class="text-center">{{ det.price|floatformat:2 }}</td>
+                <td class="text-right">{{ det.subtotal|floatformat:2 }}</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="3" class="text-right"><b>Subtotal</b></td>
+            <td class="text-right">{{ sale.subtotal|floatformat:2 }}</td>
+        </tr>
+        <tr>
+            <td colspan="3" class="text-right"><b>Iva %</b></td>
+            <td class="text-right">{{ sale.iva|floatformat:2 }}</td>
+        </tr>
+        <tr>
+            <td colspan="3" class="text-right"><b>Total a pagar</b></td>
+            <td class="text-right">{{ sale.total|floatformat:2 }}</td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <p class="text-uppercase font-weight-bold text-center">
+                    Total de productos {{ sale.detsale_set.all.count }}<br>
+                    !Gracias por su preferencia!<br>
+                    Una vez que usted a recibido el pedido<br>
+                    No hay derecho a reclamo ni devolución del producto<br>
+                    Que tenga un excelente día
+                </p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
