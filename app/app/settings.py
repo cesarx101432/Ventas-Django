@@ -156,3 +156,5 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'cesaralexisitz@gmail.com'
 
 EMAIL_HOST_PASSWORD = 'nahgeupcmpsuvqdi'
+
+DOMAIN = ''

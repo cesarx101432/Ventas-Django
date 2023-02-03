@@ -1,8 +1,7 @@
-
-from app.wsgi import *
+from config.wsgi import *
 from django.template.loader import get_template
 from weasyprint import HTML, CSS
-from app import settings
+from config import settings
 
 def printTicket():
     template = get_template("ticket.html")
