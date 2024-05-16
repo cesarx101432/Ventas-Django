@@ -21,7 +21,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        request.user.get_group_session()
+        request.user.groups
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):

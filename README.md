@@ -3,19 +3,47 @@ Sistema de ventas para django
 
 
 //iniciar variable de entorno
-
+## 0.- Crea Servicio autoarranque 
+vi /root/Ventas-Django/service.sh
+vi /lib/systemd/system/venta_django.service
+sudo systemctl restart venta_django.service
+sudo systemctl status venta_django.service
+systemctl daemon-reload
+-------
+[Unit]
+Description=My test service
+After=multi-user.target
+[Service]
+User=root
+WorkingDirectory=/root/Ventas-Django
+ExecStart=bash /root/Ventas-Django/service.sh
+[Install]
+WantedBy=multi-user.target
+-------
 
 ## 1.- Iniciar variable de entorno
 ```bash
 # Para inciar el proyecto es necesario iniciar las variable de entorno.
+
+#Para Linux UBUNTU
 py --version
 py -m venv env
+source env/bin/activate
+
+
+
+#Para Windows
+python --version
+python -m venv env
+
+#Para python 3
+python3 -m venv env
 env\Scripts\activate.bat
+
+
 #  En caso de tener porblemas de activacion en shell de Visual Studio correr:
 \env\Scripts\Activate.ps1
 
-#Para Linux 
-source env/bin/activate
 ```
 
 ## 2.- Instalacion del proyecto
@@ -23,21 +51,36 @@ source env/bin/activate
 # Es necesario instalar los requerimientos.
 python -m pip freeze
 pip freeze>requirements.txt 
-pip install -r \Ventas-Django\app\requirements.txt 
+pip3 install -r app\requirements\requirements.txt 
+pip3 install --only-binary Pillow Pillow
+pip3 install django-widget-tweaks 
+pip3 install django-crum
+pip3 install django-weasyprint
 
+
+https://www.pornhub.com/view_video.php?viewkey=65ca8b5e116d5
+
+#Para WeasyPrint en ubuntu
+https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#installation
+apt-get install pango1.0-tools #ubuntu
+pip3 install WeasyPrint 
 ```
 
 ## 3.- Correr migraciones
 ```bash
 # Antes de iniciar el proyecto se debe correr las migraciones.
-python manage.py makemigrations
-python manage.py migrate
+python app/manage.py migrate
+python app/manage.py makemigrations
+python app/manage.py makemigrations erp homepage login reports user
 ```
 
 ## 4.- Iniciar proyecto
 ```bash
 # Se debe correr manage.py por lo cual debe estar posicionado en la raiz del archivo.
-python manage.py runserver
+python app/manage.py runserver
+python app/manage.py runserver 82.165.208.140:8000
+python app/manage.py runserver 192.168.1.85:8000
+
 ```
 
 ## Creacion de Usuarios
